@@ -1,0 +1,88 @@
+<nz-layout class="layout">
+  <!-- 档案列表顶部 -->
+  <app-backsheader></app-backsheader>
+  <!-- 档案内容列表 -->
+  <nz-content class="nzContent" style="padding:15px 50px;">
+    <nz-select
+      style="width: 120px;"
+      [(ngModel)]="item['model']"
+      nzAllowClear
+      nzPlaceHolder="{{ item['placeHolder'] }}"
+      *ngFor="let item of selectInfo"
+    >
+      <nz-option
+        *ngFor="let info of item['options']"
+        nzValue="{{ info.value }}"
+        nzLabel="{{ info.label }}"
+      ></nz-option>
+    </nz-select>
+    <div class="example-input">
+      <input
+        nz-input
+        placeholder="姓名筛选"
+        nzSize="default"
+        [(ngModel)]="patientNameSelected"
+      />
+    </div>
+    <nz-breadcrumb
+      class="nzContentTitle"
+      style="height:100px;width:100px;background-color:yellowgreen"
+    >
+      <!-- 请输入患者姓名搜索 -->
+      <button
+        class="nzButton"
+        nz-button
+        [nzType]="'primary'"
+        (click)="exportList()"
+      >
+        <span>导出</span>
+      </button>
+      <nz-modal
+        [(nzVisible)]="isVisible"
+        (nzOnCancel)="handleCancel()"
+        (nzOnOk)="handleOk()"
+      >
+        <p>请选中需要导出的患者!</p>
+      </nz-modal>
+    </nz-breadcrumb>
+    <!-- 列表内容 -->
+    <nz-table #nzTable [nzData]="listOfDisplayData">
+      <thead (nzSortChange)="sort($event)" nzSingleSort>
+        <tr>
+          <th nzCustomFilter>姓名</th>
+          <th>性别</th>
+          <th>年龄</th>
+          <th>手机号</th>
+          <th>测评报告</th>
+          <th>教育程度</th>
+          <th>职业</th>
+          <th>婚姻</th>
+          <th>地址</th>
+          <th>是否确诊老年痴呆</th>
+          <th>是否用过痴呆药物</th>
+          <th nzShowSort nzSortKey="name">建档时间</th>
+          <th>建档人</th>
+          <th nzShowSort nzSortKey="name">更新时间</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of nzTable.data" (click)="goToDetails(data)">
+          <td>{{ data.patient.patientName }}</td>
+          <td>{{ data.patient.patientSex === 0 ? "女" : "男" }}</td>
+          <td>{{ data.patient.patientAge }}</td>
+          <td>{{ data.patient.mobilephone }}</td>
+          <td>{{ data.patient.presentation }}</td>
+          <td>{{ data.patient.education }}</td>
+          <td>{{ data.patient.jobType }}</td>
+          <td>{{ data.patient.marrige }}</td>
+          <td>{{ data.patient.address }}</td>
+          <td>{{ data.patient.status }}</td>
+          <td>{{ data.medicationNames }}</td>
+          <td>{{ data.patient.createTime }}</td>
+          <td>{{ data.creater }}</td>
+          <td>{{ data.patient.updateTime }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-content>
+</nz-layout>

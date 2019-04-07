@@ -1,0 +1,52 @@
+*{
+    margin:0;
+    padding:0;
+}
+.adminList{
+    width:100%;
+    height: 80px;
+    border-bottom: 1px solid #666;
+    padding-left: 50px;
+    li{
+        list-style: none;
+        float: left;
+        line-height: 100px;
+        text-align: center;
+        width:150px;
+        font-size:18px;
+    }
+}
+.personal{
+    height: 100%;
+    [nz-form] {
+        max-width: 600px;
+        margin:auto;
+        margin-top:150px;
+    }
+    .preservation{
+        nz-form-control{
+            button{
+                width:80px;
+                margin-left: 280px;
+                margin-top:20px;
+            }
+        }
+    }
+}
+.updataPass{
+    height: 100%;
+    [nz-form] {
+        max-width: 600px;
+        margin:auto;
+        margin-top:150px;
+    }
+    .preservation{
+        nz-form-control{
+            button{
+                width:80px;
+                margin-left: 280px;
+                margin-top:20px;
+            }
+        }
+    }
+}

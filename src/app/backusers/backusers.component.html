@@ -1,0 +1,161 @@
+<nz-layout class="layout">
+  <!-- 档案列表顶部 -->
+  <app-backsheader></app-backsheader>
+  <!-- 档案内容列表 -->
+  <nz-content class='nzContent' style="padding:0 50px;">
+    <!-- 左侧tab -->
+    <div class='sideNav'>
+      <div class='userBasic' (click)='healthyUser()'>脑健康管理师</div>
+    </div>
+    <!-- 右侧内容区---脑健康管理师 -->
+    <div class='bigOneDiv'>
+      <nz-breadcrumb class='nzContentTitle' style="margin:16px 0;">
+        <!-- 档案搜索框 -->
+        <div class='archivesSearch'></div>
+        <!-- 请输入患者姓名搜索 -->
+        <nz-input-group class='searchList' nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
+          <input class='searchText' type="text" nz-input placeholder="请输入姓名搜索">
+        </nz-input-group>
+        <!-- 下载模板 -->
+        <button class='downloadBtn' nz-button [nzType]="'primary'" (click)="downloadModal()"><span>下载模板</span></button>
+        <!-- 导入 -->
+        <button class='importBtn' nz-button [nzType]="'primary'" (click)="importModal()"><span>导入</span></button>
+        <!-- 导出  -->
+        <button class='exportBtn' nz-button [nzType]="'primary'" (click)="exportModal()"><span>导出</span></button>
+        <nz-modal [(nzVisible)]="isVisible" nzTitle="新建测评方案" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+          <div class='evaluationName'>
+            <span class='explain'>*姓名：</span>
+            <input class='explainText' placeholder="请输入姓名" [(ngModel)]="value">
+          </div>
+          <div class='evaluationPhone'>
+            <span class='explain'>*手机号码：</span>
+            <input class='explainText' placeholder="请输入手机号码" [(ngModel)]="value">
+          </div>
+          <div class='userSex'>
+            <span class='explain'>*性别:&nbsp;</span>
+            <nz-radio-group [(ngModel)]="radioValue">
+              <label nz-radio nzValue="A">男</label>
+              <label nz-radio nzValue="B">女</label>
+            </nz-radio-group>
+          </div>
+          <div class='evaluationHostel'>
+            <span class='explain'>*所属医院：</span>
+            <input class='explainText' placeholder="" [(ngModel)]="value">
+          </div>
+          <div class='evaluationEmile'>
+            <span class='explain'>*邮箱：</span>
+            <input class='explainText' placeholder="请输入邮箱地址" [(ngModel)]="value">
+          </div>
+          <div class='evaluationId'>
+            <span class='explain'>*身份证号：</span>
+            <input class='explainText' placeholder="请输入身份证号" [(ngModel)]="value">
+          </div>
+          <div class='introduction'>
+            <span class='explain'>*个人简介：</span>
+            <textarea class='explainText' placeholder="请输入个人介绍（学校.工作经历等）" [(ngModel)]="value"></textarea>
+          </div>
+        </nz-modal>
+        <!-- 新建 -->
+        <button class='newBtn' nz-button [nzType]="'primary'" (click)="showModal()"><span>+ 新建</span></button>
+        <nz-modal [(nzVisible)]="newVisible" nzTitle="新建测评方案" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+          <div class='evaluationName'>
+            <span class='explain'>*姓名：</span>
+            <input class='explainText' placeholder="请输入姓名" [(ngModel)]="value">
+          </div>
+          <div class='evaluationPhone'>
+            <span class='explain'>*手机号码：</span>
+            <input class='explainText' placeholder="请输入手机号码" [(ngModel)]="value">
+          </div>
+          <div class='userSex'>
+            <span class='explain'>*性别:&nbsp;</span>
+            <nz-radio-group [(ngModel)]="radioValue">
+              <label nz-radio nzValue="A">男</label>
+              <label nz-radio nzValue="B">女</label>
+            </nz-radio-group>
+          </div>
+          <div class='evaluationHostel'>
+            <span class='explain'>*所属医院：</span>
+            <input class='explainText' placeholder="" [(ngModel)]="value">
+          </div>
+          <div class='evaluationEmile'>
+            <span class='explain'>*邮箱：</span>
+            <input class='explainText' placeholder="请输入邮箱地址" [(ngModel)]="value">
+          </div>
+          <div class='evaluationId'>
+            <span class='explain'>*身份证号：</span>
+            <input class='explainText' placeholder="请输入身份证号" [(ngModel)]="value">
+          </div>
+          <div class='introduction'>
+            <span class='explain'>*个人简介：</span>
+            <textarea class='explainText' placeholder="请输入个人介绍（学校.工作经历等）" [(ngModel)]="value"></textarea>
+          </div>
+        </nz-modal>
+      </nz-breadcrumb>
+      <div style="background:#fff; padding: 24px; min-height: 280px;">
+        <!-- 组建 -->
+        <!-- 用户列表 -->
+        <nz-table #nzTable [nzData]="listOfDisplayData">
+          <thead (nzSortChange)="sort($event)" nzSingleSort>
+            <tr>
+              <th nzCustomFilter>
+                姓名
+                <nz-dropdown nzTrigger="click" nzPlacement="bottomRight" [nzClickHide]="false" nzTableFilter #dropdown>
+                  <i nz-icon nzType="search" class="ant-table-filter-icon"
+                    [class.ant-table-filter-open]="dropdown.nzVisible" nz-dropdown></i>
+                  <div class="search-box">
+                    <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
+                    <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">
+                      搜索
+                    </button>
+                    <button nz-button nzSize="small" (click)="reset()">Reset</button>
+                  </div>
+                </nz-dropdown>
+              </th>
+              <th nzShowFilter [nzFilters]="listOfFilterSex" (nzFilterChange)="filterSexChange($event)">性别</th>
+              <th>年龄</th>
+              <th>手机号</th>
+              <th>邮箱</th>
+              <th nzShowFilter [nzFilters]="listOfFilterEducation" (nzFilterChange)="filterEducationChange($event)">所属医院</th>
+              <th>已测试人数</th>
+              <th nzShowFilter [nzFilters]="listOfFilterAddress" (nzFilterChange)="filterAddressChange($event)">状态</th>
+              <th  nzShowSort nzSortKey="name">建档时间</th>
+              <th>建档人</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of healthyDivision">
+              <!-- 姓名 -->
+              <td>{{ data.doctorEntity.userName }}</td>
+              <!-- 性别 -->
+              <td>{{ data.doctorEntity.sex }}</td>
+              <!-- 年龄 -->
+              <td>{{ data.doctorEntity.age }}</td>
+              <!-- 手机号码 -->
+              <td>{{ data.doctorEntity.mobilenumber }}</td>
+              <!-- 邮箱 -->
+              <td>{{data.doctorEntity.registerEmail}}</td>
+              <!-- 所属医院 -->
+              <td>{{data.hospitals}}</td>
+              <!-- 已测试人数 -->
+              <td>{{data.doctorEntity.doctorNumber}}</td>
+              <!-- 状态 -->
+              <td>{{ data.doctorEntity.status }}</td>
+              <!-- 创建时间 -->
+              <td>{{data.doctorEntity.createTime}}</td>
+              <!-- 创建人 -->
+              <td>{{data.doctorEntity.fullname}}</td>
+              <td>
+                <button nz-button nzType="edit">编辑</button>
+                <button nz-button nzType="see">查看</button>
+                <button nz-button nzType="pass">重置密码</button>
+                <button nz-button nzType="disable">禁用</button>
+                <button nz-button nzType="synchronous">同步数据</button>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </nz-content>
+</nz-layout>

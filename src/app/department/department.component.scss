@@ -1,0 +1,92 @@
+*{
+    margin:0;
+    padding:0;
+}
+.layout{
+    // 档案内容列表
+    .nzContent{
+        // 侧边导航
+        .sideNav{
+            width:160px;
+            height: 876px;
+            background: #666;
+            float: left;
+            div{
+                 width:160px;
+                 height: 70px;
+                 text-align: center;
+                 line-height: 70px;
+                 font-size:18px;
+                 color:#fff;
+            }
+            .userBasic:active{
+                 width:160px;
+                 height: 70px;
+                 background: #009dd9;
+            }
+            .presentation:active{
+                 width:160px;
+                 height: 70px;
+                 background: #009dd9;
+            }
+         }
+         .bigOneDiv{
+             float: left;
+             width:85%;
+            .nzContentTitle{
+                // 快速查找
+                .searchList{
+                    width:212px;
+                    height:25px;
+                    float: left;
+                    .searchText{
+                        height:30px;
+                    }
+                } 
+                // 编辑用户
+                .editButton{
+                    width: 102px;
+                    height: 30px;
+                    margin-left: 950px;
+                    margin-right: 20px;
+                    // float: right;
+                    margin-top:-30px;
+                }
+                // 添加用户
+                .addButton{
+                    width: 102px;
+                    height: 30px;
+                    margin-right: 20px;
+                    // float: right;
+                    margin-top:-30px;
+                }
+                // 新建用户
+               .newButton {
+                    width: 102px;
+                    height: 30px;
+                    margin-left: 10px;
+                    // float: right;
+                    margin-top:-30px;
+                }
+            }
+         }
+    }
+}
+::ng-deep .ant-modal-content{
+    width:730px;
+    height: 490px;
+
+    .ant-modal-header{
+        border:0;
+    }
+    .ant-modal-footer{
+        border:0;
+    }
+    .ant-modal-body{
+        div {
+            input{
+                width:350px;
+            }
+        }
+    }
+}

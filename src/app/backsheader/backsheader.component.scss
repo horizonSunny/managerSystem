@@ -1,0 +1,33 @@
+.ant-layout-header{
+    background: rgba(54, 169, 206, 1);
+    .logo {
+        width: 120px;
+        height: 31px;
+        float: left;
+        color: #fff;
+        font-weight: 700;
+        font-size: 28px;
+    }
+    .ant-menu{
+        background: rgba(54, 169, 206, 1);
+        .nz-item-list{
+            margin-left: 40px;
+            margin-right: 40px;
+            font-weight: 400;
+            font-size:22px;
+            color: #fff
+        }
+        // icon图标
+        .adminiIcon{
+            width: 40px;
+            height: 40px;
+            background: #666;
+            float: right;
+            margin-top:10px;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: 600;
+        }
+    }
+}

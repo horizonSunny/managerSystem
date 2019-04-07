@@ -1,0 +1,143 @@
+<nz-layout class="layout">
+  <!-- 档案列表顶部 -->
+  <app-backsheader></app-backsheader>
+  <!-- 档案内容列表 -->
+  <nz-content class='nzContent' style="padding:0 50px;">
+    <!-- 左侧tab -->
+    <div class='sideNav'>
+      <div class='userBasic' (click)='roleManage()'>角色管理</div>
+      <div class='presentation' (click)='department()'>部门管理</div>
+    </div>
+    <!-- 右侧内容区-- 用户管理 -->
+    <div class='bigOneDiv'>
+      <nz-breadcrumb class='nzContentTitle' style="margin:16px 0;">
+        <!-- 部门 -->
+        <nz-input-group class='searchList' nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
+          <input class='searchText' type="text" nz-input placeholder="请输入姓名搜索">
+        </nz-input-group>
+        <!-- 编辑部门 -->
+        <button class='editButton' nz-button [nzType]="'primary'" (click)="editModal()"><span>编辑部门</span></button>
+        <!-- 添加部门 -->
+        <button class='addButton' nz-button [nzType]="'primary'" (click)="addModal()"><span>+ 添加部门</span></button>
+        <nz-modal class='evaluaModel' [(nzVisible)]="isAddVisible" nzTitle="新建角色" (nzOnCancel)="handleCancel()"
+          (nzOnOk)="handleOk()">
+          <!-- 部门名称 -->
+          <div class='addName'>
+            <span class='explain'>*部门名称：</span>
+            <input class='explainText' placeholder="请输入部门名称" [(ngModel)]="departName">
+          </div>
+          &nbsp;
+          <!-- 上级部门 -->
+          <div class='addPhone'>
+            <span class='explain'>*上级部门：</span>
+            <input class='explainText' placeholder="请输入上级部门" [(ngModel)]="superior">
+          </div>
+          &nbsp;
+          <!-- 医院 -->
+          <div class='addDepar'>
+            <span class='explain'>*医院：</span>
+            <nz-cascader [nzOptions]="nzOptions" [(ngModel)]="values" (ngModelChange)="onChanges($event)"></nz-cascader>
+            &nbsp;
+            <span class='seeHotlie'>
+              <a href="">查看医院</a>
+            </span>
+            &nbsp;
+            <ul style="width:350px;height:200px;margin-left:50px;margin-top:10px;list-style: none;float: left;overflow:auto;">
+              <li *ngFor = 'let item of hospitalName'>{{item.hospitalName}}
+                &nbsp;&nbsp;<span (click)='removeClick()'>X</span>
+              </li>
+            </ul>
+          </div>
+          &nbsp;
+        </nz-modal>
+        <!-- 新建用户 -->
+        <button class='newButton' nz-button [nzType]="'primary'" (click)="newModal()"><span>+ 新建用户</span></button>
+        <nz-modal class='evaluaModel' [(nzVisible)]="isNewVisible" nzTitle="新建角色" (nzOnCancel)="handleCancel()"
+          (nzOnOk)="handleUserOk()">
+          <!-- 部门 -->
+          <div class='NewDepar'>
+            <span class='explain'>*部门：</span>
+            <nz-select style="width: 120px;" [(ngModel)]="selectedValue" nzPlaceHolder="{{treeKeys}}"></nz-select>
+            &nbsp;
+            <span class='seeHotlie'>
+              <a href="">查看医院</a>
+            </span>
+          </div>
+          &nbsp;
+          <div class='newName'>
+            <span class='explain'>*姓名：</span>
+            <input class='explainText' placeholder="请输入姓名" [(ngModel)]="valueName">
+          </div>
+          &nbsp;
+          <div class='newPhone'>
+            <span class='explain'>*手机号码：</span>
+            <input class='explainText' placeholder="请输入手机号" [(ngModel)]="valuePhone">
+          </div>
+          &nbsp;
+          <div class='newEmile'>
+            <span class='explain'>*邮箱：</span>
+            <input class='explainText' placeholder="请输入邮箱" [(ngModel)]="valueEmile">
+          </div>
+          &nbsp;
+          <div class='newRole'>
+            <span class='explain'>*角色：</span>
+            <nz-checkbox-wrapper (nzOnChange)="newModelRole($event)">
+              <div nz-row *ngFor = 'let text of searchsList'>
+                <div nz-col nzSpan="8"><label nz-checkbox nzValue="{{text.uid}}">{{text.roleName}}</label></div>
+              </div>
+            </nz-checkbox-wrapper>
+          </div>
+        </nz-modal>
+      </nz-breadcrumb>
+      <div style="background:#fff; padding: 24px; min-height: 780px;">
+        <!-- 左侧树形结构 -->
+        <nz-tree style='float: left;' [nzData]="nodes" nzDraggable (nzClick)="nzEvent($event)"></nz-tree>
+        <!-- 左侧tab -->
+        <nz-table style="float: right;margin-left: 100px;" #rowSelectionTable nzShowSizeChanger [nzData]="listOfAllData"
+          (nzCurrentPageDataChange)="currentPageDataChange($event)">
+          <thead>
+            <tr>
+              <th nzShowCheckbox nzShowRowSelection [nzSelections]="listOfSelection"
+                [(nzChecked)]="isAllDisplayDataChecked" [nzIndeterminate]="isIndeterminate"
+                (nzCheckedChange)="checkAll($event)"></th>
+              <th nzSortKey="departName">姓名</th>
+              <th nzSortKey="departPhone">手机号码</th>
+              <th nzSortKey="departEmile">邮箱</th>
+              <th nzSortKey="departClass">部门</th>
+              <th nzSortKey="departRole">角色</th>
+              <th nzSortKey="departState">状态</th>
+              <th nzSortKey="departTime">创建时间</th>
+              <th nzSortKey="departUpdate">更新时间</th>
+              <th nzSortKey="operation">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of newUserLIst,let i = index">
+              <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
+              <td>{{data.fullname}}</td>
+              <td>{{data.mobilenumber}}</td>
+              <td>{{data.email}}</td>
+              <td>{{data.organization.title}}</td>
+              <td>{{data.userRoles}}</td>
+              <!-- <td *ngFor = 'let item of data.userRoles'>{{item.roleName}}</td> -->
+              <td>{{data.status}}</td>
+              <td>{{data.createTime}}</td> 
+              <td>{{data.updateTime}}</td>
+              <td>
+                <!-- <nz-select style="width: 120px;" [(ngModel)]="selectedValue" nzPlaceHolder="请选择"> -->
+                <!-- <nz-select style="width: 120px;" nzPlaceHolder="请选择">
+                  <nz-option nzValue="编辑" nzLabel="编辑"></nz-option>
+                  <nz-option nzValue="查看" nzLabel="查看"></nz-option>
+                  <nz-option nzValue="禁用" nzLabel="禁用"></nz-option>
+                </nz-select> -->
+                <button nz-button nzType="primary">编辑</button>
+                <button nz-button nzType="primary">查看</button>
+                <button nz-button nzType="primary" (click) = 'disable(data.uid)'>禁用</button>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </nz-content>
+</nz-layout>

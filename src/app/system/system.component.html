@@ -1,0 +1,93 @@
+<nz-layout class="layout">
+  <!-- 档案列表顶部 -->
+  <app-backsheader></app-backsheader>
+  <!-- 档案内容列表 -->
+  <nz-content class='nzContent' style="padding:0 50px;">
+    <!-- 左侧tab -->
+    <div class='sideNav'>
+      <div class='userBasic' (click)='roleManage()'>角色管理</div>
+      <div class='presentation' (click)='department()'>部门管理</div>
+    </div>
+    <!-- 右侧内容区---测评列表 -->
+    <div class='bigOneDiv'>
+      <nz-breadcrumb class='nzContentTitle' style="margin:16px 0;">
+        <!-- 新建角色 -->
+        <button class='nzButton' nz-button [nzType]="'primary'" (click)="showModal()"><span>+ 新建角色</span></button>
+        <!-- 新增角色模态框 -->
+        <nz-modal class='evaluaModel' [(nzVisible)]="isVisible" nzTitle="新建角色" (nzOnCancel)="handleCancel()"
+          (nzOnOk)="handleOk()">
+          <div class='addRoleName'>
+            <span class='explain'>*角色名称：</span>
+            <input class='explainText' placeholder="请输入测评名称（限制20字以内）" [(ngModel)]="rolenames">
+          </div>
+          <div class='addRoleDuction'>
+            <span class='explain'>*角色描述：</span>
+            <textarea class='explainText' placeholder="请输入测评简介（限制50字以内）" [(ngModel)]="roleCon"></textarea>
+          </div>
+          <div class='addRolDiction'>
+            <span class='explain'>*分配权限：</span>
+            <table border="1">
+              <tr align="center">
+                <td></td>
+                <td>功能模块</td>
+                <td colspan="3">权限</td>
+              </tr>
+              <tr align="center" style="margin-top:20px;" *ngFor='let item of powerLists;let i = index;'>
+                <td>{{item.permissionName}}</td>
+                <td>
+                  <nz-checkbox-wrapper style="width:100%;" (nzOnChange)="functionClick($event,index)">
+                    <div nz-row>
+                      <div nz-col nzSpan="8"><label nz-checkbox nzValue="{{item.permissionIdentify}}"
+                          [ngModel]="">{{item.permissionName}}</label></div>
+                    </div>
+                  </nz-checkbox-wrapper>
+                </td>
+                <td colspan="3">
+                  <nz-checkbox-wrapper style="width:100%;" (nzOnChange)="archivesClick($event,index)">
+                    <div nz-row *ngFor='let items of item.children'>
+                      <div nz-col nzSpan="8"><label nz-checkbox nzValue="{{items.permissionIdentify}}"
+                          [ngModel]="">{{items.permissionName}}</label></div>
+                    </div>
+                  </nz-checkbox-wrapper>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </nz-modal>
+      </nz-breadcrumb>
+      <div style="background:#fff; padding: 24px; min-height: 280px;">
+        <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="listOfAllData"
+          (nzCurrentPageDataChange)="currentPageDataChange($event)">
+          <thead>
+            <tr>
+              <th nzShowCheckbox nzShowRowSelection [nzSelections]="listOfSelection"
+                [(nzChecked)]="isAllDisplayDataChecked" [nzIndeterminate]="isIndeterminate"
+                (nzCheckedChange)="checkAll($event)"></th>
+              <th nzSortKey="name" [nzFilters]="listOfName">角色名称</th>
+              <th>角色描述</th>
+              <th>状态</th>
+              <th nzShowSort nzSortKey="roleTime">创建时间</th>
+              <th nzShowSort nzSortKey="updateTime">创建时间</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of searchsList,let i = index">
+              <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
+              <td>{{data.roleName }}</td>
+              <td>{{data.description}}</td>
+              <td>{{data.status}}</td>
+              <td>{{ data.createTime }}</td>
+              <td>{{data.updateTime}}</td>
+              <td>
+                <button nz-button nzType="编辑">编辑</button>
+                <button nz-button nzType="查看">查看</button>
+                <button nz-button nzType="禁用" (click)="prohibit(data.uid)">禁用</button>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </nz-content>
+</nz-layout>

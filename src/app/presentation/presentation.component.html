@@ -1,0 +1,248 @@
+<nz-layout class="layout">
+  <!-- 档案列表顶部 -->
+  <app-backsheader></app-backsheader>
+  <!-- 用户基本信息 -->
+  <nz-content class="userDetile">
+    <ul class="userheader">
+      <li class="namePatient">
+        姓名：{{ this.detailsInfo["patient"]["patientName"] }}
+      </li>
+      <li class="sexPatient">
+        性别：{{
+          this.detailsInfo["patient"]["patientSex"] === 0 ? "男" : "女"
+        }}
+      </li>
+      <li class="agePatient">
+        年龄：{{ this.detailsInfo["patient"]["patientAge"] }}
+      </li>
+    </ul>
+    <!-- 侧边导航 -->
+    <div class="sideNav">
+      <div class="userBasic" (click)="basicData()">基本信息</div>
+      <div class="presentation" (click)="presentText()">测评报告</div>
+    </div>
+
+    <!-- 用户内容区 -->
+    <div class="textDetile" *ngIf="hideDetile">
+      <!-- 用户基本信息 -->
+      <div class="inforCon">
+        <div class="userName">
+          <span class="explain">*患者姓名：</span>
+          <input
+            class="explainText"
+            placeholder="用户姓名"
+            [(ngModel)]="this.detailsInfo['patient']['patientName']"
+            [disabled]="true"
+          />
+        </div>
+        <div class="userSex">
+          <span class="explain">*性别:&nbsp;</span>
+          <nz-radio-group
+            [(ngModel)]="this.detailsInfo['patient']['patientSex']"
+          >
+            <label nz-radio nzValue="0">男</label>
+            <label nz-radio nzValue="1">女</label>
+          </nz-radio-group>
+        </div>
+        <div class="userAge">
+          <span class="explain">*出生年龄：</span>
+          <input
+            class="explainText"
+            placeholder="出生年龄"
+            [(ngModel)]="this.detailsInfo['patient']['patientBirthdate']"
+          />
+        </div>
+        <div class="userMarriage">
+          <span class="explain">*婚姻状况：</span>
+          <input
+            class="explainText"
+            placeholder="婚姻状况"
+            [(ngModel)]="this.detailsInfo['patient']['marrige']"
+          />
+        </div>
+        <div class="userPhone">
+          <span class="explain">*手机号：</span>
+          <input
+            class="explainText"
+            placeholder="用户手机号"
+            [(ngModel)]="this.detailsInfo['patient']['mobilephone']"
+          />
+        </div>
+        <div class="userManage">
+          <span class="explain">*职业：</span>
+          <input
+            class="explainText"
+            placeholder="职业"
+            [(ngModel)]="this.detailsInfo['patient']['jobType']"
+          />
+        </div>
+        <div class="userSchool">
+          <span class="explain">*受教育程度：</span>
+          <input
+            class="explainText"
+            placeholder="受教育程度"
+            [(ngModel)]="this.detailsInfo['patient']['education']"
+          />
+        </div>
+        <div class="userYears">
+          <span class="explain">*共：</span>
+          <nz-select
+            style="width: 120px;"
+            [(ngModel)]="yearsValue"
+            nzAllowClear
+            nzPlaceHolder="1"
+          >
+            <nz-option nzValue="one" nzLabel="1"></nz-option>
+            <nz-option nzValue="two" nzLabel="2"></nz-option>
+          </nz-select>
+        </div>
+        <div class="userAddress">
+          <span class="explain">*居住地：</span>
+          <input
+            class="explainText"
+            placeholder="居住地"
+            [(ngModel)]="this.detailsInfo['patient']['address']"
+          />
+        </div>
+        <div class="userId">
+          <span class="explain">*身份证号：</span>
+          <input
+            class="explainText"
+            placeholder="用户身份证号"
+            [(ngModel)]="this.detailsInfo['patient']['patientIdnumber']"
+          />
+        </div>
+      </div>
+      <!-- 用过的药物 -->
+      <div class="drugUser">
+        <div class="drugNo">
+          <span class="explain">*是否用过痴呆药物：</span>
+          <nz-radio-group [(ngModel)]="this.test">
+            <label nz-radio nzValue="是">是</label>
+            <label nz-radio nzValue="否">否</label>
+          </nz-radio-group>
+        </div>
+        <div class="drugTime">
+          <span class="explain">*用药时间：</span>
+          <input
+            class="explainText"
+            placeholder="起始时间"
+            [(ngModel)]="startTime"
+          />
+          <span> 至 </span>
+          <input
+            class="explainText"
+            placeholder="结束时间"
+            [(ngModel)]="endTime"
+          />
+        </div>
+        <div class="drugStop">
+          <span class="explain">*是否停药:&nbsp;</span>
+          <nz-radio-group [(ngModel)]="stopYaoValue">
+            <label nz-radio nzValue="yesYao">是</label>
+            <label nz-radio nzValue="noYao">否</label>
+          </nz-radio-group>
+        </div>
+        <div class="drugReason">
+          <span class="explain">*停药原因:</span>
+          <nz-select
+            style="width: 120px;"
+            [(ngModel)]="stopValue"
+            nzAllowClear
+            nzPlaceHolder="全部"
+          >
+            <nz-option nzValue="nooBvious" nzLabel="效果不明显"></nz-option>
+            <nz-option nzValue="other" nzLabel="使用其他药物"></nz-option>
+          </nz-select>
+        </div>
+      </div>
+      <!-- 调查 -->
+      <div class="userWhether">
+        <div class="injuryBrain">
+          <span class="explain">*是否有脑外伤:&nbsp;</span>
+          <nz-radio-group [(ngModel)]="NoYesValue">
+            <label nz-radio nzValue="yes">是</label>
+            <label nz-radio nzValue="no">否</label>
+          </nz-radio-group>
+        </div>
+        <div class="dementia">
+          <span class="explain">*是否有老年痴呆家族史:&nbsp;</span>
+          <nz-radio-group [(ngModel)]="familyValue">
+            <label nz-radio nzValue="familyYes">是</label>
+            <label nz-radio nzValue="familyNo">否</label>
+          </nz-radio-group>
+        </div>
+      </div>
+    </div>
+    <!-- 测评报告 -->
+    <div class="evaluationText" *ngIf="hideevaluation">
+      <!-- 顶部时间横轴 -->
+      <nz-radio-group [(ngModel)]="nzTabPosition"></nz-radio-group>
+      <nz-tabset
+        class="textCon"
+        style="height:220px;"
+        [nzTabPosition]="nzTabPosition"
+        [(nzSelectedIndex)]="selectedIndex"
+        (nzSelectChange)="log([$event])"
+      >
+        <nz-tab
+          class="textList"
+          *ngFor="let tab of tabs"
+          [nzTitle]="tab.name"
+          (nzSelect)="log(['select', tab])"
+          (nzClick)="log(['click', tab])"
+          (nzDeselect)="log(['deselect', tab])"
+        >
+          <!-- {{ tab.content }} -->
+          <p class="titleNao">脑健康评估报告</p>
+          <table class="tabContent" border="1">
+            <tr class="oneTab">
+              <th>项目</th>
+              <th>内容</th>
+              <th>得分</th>
+              <th>正常参考值</th>
+              <th>结果</th>
+              <th>操作</th>
+            </tr>
+            <tr class="oneTab">
+              <td>词语流畅性测验</td>
+              <td>情景记忆</td>
+              <td>87.0</td>
+              <td>>87.0</td>
+              <td>正常</td>
+              <td class="seeDetile">
+                <button nz-button [nzType]="'primary'" (click)="showModal()">
+                  <span>查看详情</span>
+                </button>
+                <nz-modal
+                  [(nzVisible)]="isVisible"
+                  nzTitle="The first Modal"
+                  (nzOnCancel)="handleCancel()"
+                  (nzOnOk)="handleOk()"
+                >
+                  <p>量表详情</p>
+                </nz-modal>
+              </td>
+            </tr>
+            <tr class="oneTab">
+              <td>NPI(神经精神问卷)</td>
+              <td>总体认知测试</td>
+              <td>87.0</td>
+              <td>>87.0</td>
+              <td>正常</td>
+              <td class="seeDetile">查看详情</td>
+            </tr>
+            <tr class="oneTab">
+              <td>MoCa量表</td>
+              <td>情景记忆</td>
+              <td>87.0</td>
+              <td>>87.0</td>
+              <td>正常</td>
+              <td class="seeDetile">查看详情</td>
+            </tr>
+          </table>
+        </nz-tab>
+      </nz-tabset>
+    </div>
+  </nz-content>
+</nz-layout>

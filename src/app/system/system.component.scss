@@ -1,0 +1,78 @@
+*{
+    margin:0;
+    padding:0;
+}
+.layout{
+    // 档案内容列表
+    .nzContent{
+        // 侧边导航
+        .sideNav{
+            width:160px;
+            height: 876px;
+            background: #666;
+            float: left;
+            div{
+                 width:160px;
+                 height: 70px;
+                 text-align: center;
+                 line-height: 70px;
+                 font-size:18px;
+                 color:#fff;
+            }
+            .userBasic:active{
+                 width:160px;
+                 height: 70px;
+                 background: #009dd9;
+            }
+            .presentation:active{
+                 width:160px;
+                 height: 70px;
+                 background: #009dd9;
+            }
+         }
+         .bigOneDiv{
+             float: left;
+             width:85%;
+            .nzContentTitle{
+                //新建测评方案
+               .nzButton {
+                    width: 102px;
+                    height: 30px;
+                    margin-left:91%;
+                }
+            }
+         }
+    }
+}
+::ng-deep .ant-modal-content{
+    width:730px;
+    min-height: 390px;
+
+    .ant-modal-header{
+        border:0;
+    }
+    .ant-modal-footer{
+        border:0;
+    }
+    .ant-modal-body{
+        div:nth-child(1){
+            margin-top:10px;
+        }
+        div{
+            margin-left: 30px;
+            margin-top:30px;
+            input{
+                width:250px;
+            }
+            textarea{
+                width:450px;
+            }
+        }
+    }
+}
+::ng-deep .ant-btn{
+    background: #009dd9;
+    width:80px;
+    height: 30px;
+    margin-left: 5px;
+}

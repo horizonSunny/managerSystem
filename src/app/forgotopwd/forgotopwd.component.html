@@ -1,0 +1,63 @@
+<div class='formBack'>
+  <!-- 用户名 -->
+  <form *ngIf='userHide' nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="submitForm()">
+    <p class='loginForm-title'>请输入您的账号名称</p>
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group [nzPrefix]="prefixUser">
+          <input type="text" nz-input formControlName="userName" (blur)='onBlurUser(login.userName)'
+            [(ngModel)]="login.userName" name="userName" placeholder="请输入您的用户名(电子邮箱地址)" required>
+        </nz-input-group>
+        <nz-form-explain *ngIf="loginForm.get('userName').dirty && loginForm.get('userName').errors">请输入您的用户名!
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <button class='nextStep' (click)='nextClick()' nz-button nzType="primary">下一步</button>
+    <button class='cancel' nz-button nzType="primary" (click)='cancelClick()'>取消</button>
+  </form>
+  <!-- 邮箱 -->
+  <form *ngIf='emileHide' nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="emileForm()">
+    <p class='loginForm-title'>我们已将验证码发送至<br>XXXXXXX@XXX.com</p>
+    <div class='phoneCode'>
+      请输入验证码。<button type='button' (click)="getPhoneCode()" class="getPhoneNum">获取手机验证码</button>
+    </div>
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group [nzPrefix]="prefixUser">
+          <input type="text" nz-input formControlName="userEmile" (blur)='onBlurEmile(login.userEmile)'
+            [(ngModel)]="login.userEmile" name="userEmile" placeholder="验证码" required>
+        </nz-input-group>
+        <nz-form-explain *ngIf="loginForm.get('userEmile').dirty && loginForm.get('userEmile').errors">请输入您的用户名!
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <button class='nextStep' nz-button nzType="primary" (click)='emileHideClick()'>下一步</button>
+  </form>
+  <!-- 密码--确认密码 -->
+  <form *ngIf='passHide' nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="passForm()">
+    <p class='loginForm-title'>密码确认</p>
+    <!-- 首次输入密码 -->
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group [nzPrefix]="prefixUser">
+          <input type="text" nz-input formControlName="userPas" (blur)='onBlurEmile(login.userPas)'
+            [(ngModel)]="login.userPas" name="userPas" placeholder="请输入密码（6-11位数字,字母组成）" required>
+        </nz-input-group>
+        <nz-form-explain *ngIf="loginForm.get('userPas').dirty && userPas.get('userPas').errors">请输入您的用户名!
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <!-- 再次确认密码 -->
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group [nzPrefix]="prefixUser">
+          <input type="text" nz-input formControlName="userpasEr" (blur)='onBlurEmile(login.userpasEr)'
+            [(ngModel)]="login.userpasEr" name="userpasEr" placeholder="请输入密码（6-11位数字,字母组成）" required>
+        </nz-input-group>
+        <nz-form-explain *ngIf="loginForm.get('userpasEr').dirty && loginForm.get('userpasEr').errors">请输入您的用户名!
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <button class='nextStep' nz-button nzType="primary">下一步</button>
+  </form>
+</div>

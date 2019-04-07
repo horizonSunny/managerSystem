@@ -1,0 +1,10 @@
+<nz-header class='ant-layout-header'>
+  <div class="logo">燧人大脑</div>
+  <ul nz-menu class='ant-menu' [nzTheme]="'dark'" [nzMode]="'horizontal'" style="line-height: 64px;">
+    <li class='nz-item-list' nz-menu-item (click)='archives()'>档案</li>
+    <li class='nz-item-list' nz-menu-item (click)='evaluation()'>测评</li>
+    <li class='nz-item-list' nz-menu-item (click)='usersClick()'>用户</li>
+    <li class='nz-item-list' nz-menu-item (click)='operate()'>系统</li>
+    <li class = 'adminiIcon' (click) = 'adminUser()'>管</li>
+  </ul>
+</nz-header>

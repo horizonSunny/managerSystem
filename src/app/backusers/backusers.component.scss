@@ -1,0 +1,101 @@
+*{
+    margin:0;
+    padding:0;
+}
+.layout{
+    // 档案内容列表
+    .nzContent{
+        // 侧边导航
+        .sideNav{
+            width:160px;
+            height: 876px;
+            background: #666;
+            float: left;
+            div{
+                 width:160px;
+                 height: 70px;
+                 text-align: center;
+                 line-height: 70px;
+                 font-size:18px;
+                 color:#fff;
+            }
+            .userBasic:active{
+                 width:160px;
+                 height: 70px;
+                 background: #009dd9;
+            }
+            .presentation:active{
+                 width:160px;
+                 height: 70px;
+                 background: #009dd9;
+            }
+         }
+         .bigOneDiv{
+             float: left;
+             width:85%;
+            .nzContentTitle{
+                // 快速查找
+               .searchList{
+                   width:212px;
+                   height:25px;
+                   float: left;
+                   .searchText{
+                        height:30px;
+                   }
+               } 
+                //批量导入
+                .downloadBtn{
+                    width: 102px;
+                    height: 30px;
+                    margin-top:-30px;
+                    margin-left: 570px;
+                    margin-right: 20px;
+                }
+                .importBtn{
+                    width: 102px;
+                    height: 30px;
+                    margin-top:-30px;
+                    margin-right: 20px;
+                }
+                .exportBtn{
+                    width: 102px;
+                    height: 30px;
+                    margin-top:-30px; 
+                    margin-right: 20px;
+                }
+                .newBtn {
+                    width: 102px;
+                    height: 30px;
+                    margin-top:-30px;
+                    margin-left: 10px;
+              }
+            }
+         }
+    }
+}
+::ng-deep .ant-modal-content{
+    width:730px;
+    height:550px;
+
+    .ant-modal-header{
+        border:0;
+    }
+    .ant-modal-footer{
+        border:0;
+    }
+    .ant-modal-body{
+        div:nth-child(1){
+            margin-top:10px;
+        }
+        div{
+            margin-left: 30px;
+            margin-top:30px;
+            input{
+                width:450px;
+            }
+            textarea{
+                width:450px;
+            }
+        }
+    }
+}

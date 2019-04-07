@@ -1,0 +1,108 @@
+<nz-layout class="layout">
+  <!-- 档案列表顶部 -->
+  <app-backsheader></app-backsheader>
+  <!-- 档案内容列表 -->
+  <nz-content class='nzContent' style="padding:0 50px;">
+    <!-- 左侧tab -->
+    <div class='sideNav'>
+      <div class='userBasic' (click)='basicData()'>测评列表</div>
+      <div class='presentation' (click)='presentText()'>方案管理</div>
+    </div>
+    <!-- 右侧内容区---方案管理 -->
+    <div class='bigOneDiv'>
+      <nz-breadcrumb class='nzContentTitle' style="margin:16px 0;">
+        <!-- 档案搜索框 -->
+        <div class='archivesSearch'></div>
+        <!-- 请输入患者姓名搜索 -->
+        <nz-input-group class='searchList' nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
+          <input class='searchText' type="text" nz-input placeholder="请输入姓名搜索">
+        </nz-input-group>
+        <!-- 导出 -->
+        <button class='nzButton' nz-button [nzType]="'primary'" (click)="showModal()"><span>+ 新建测评方案</span></button>
+        <nz-modal [(nzVisible)]="isVisible" nzTitle="新建测评方案" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+          <div class='evaluationName'>
+            <span class='explain'>*方案名称：</span>
+            <input class='explainText' placeholder="请输入测评名称（限制20字以内）" [(ngModel)]="assTitleValue">
+          </div>
+          <div class='introduction'>
+            <span class='explain'>*方案简介：</span>
+            <textarea class='explainText' placeholder="请输入测评简介（限制50字以内）" [(ngModel)]="assessmentValue"></textarea>
+          </div>
+          <div class='classification'>
+            <span class='explain'>*分类：</span>
+            <nz-radio-group [(ngModel)]="radioValue" (ngModelChange)='classClick($event)'>
+              <label nz-radio nzValue="0">基础版</label>
+              <label nz-radio nzValue="1">临床版</label>
+            </nz-radio-group>
+          </div>
+          <!-- 医院 -->
+          <div class='addDepar'>
+            <span class='explain'>*医院：</span>
+            <nz-cascader [nzOptions]="nzOptions" [(ngModel)]="values" (ngModelChange)="onChanges($event)"></nz-cascader>
+            <nz-select style="width: 120px;" [(ngModel)]="selectedValue" (ngModelChange)="hostileChanges($event)" nzAllowClear nzPlaceHolder="请选择医院">
+              <nz-option *ngFor = 'let hosItem of hospitalName' nzValue="{{hosItem.value}}" nzLabel="{{hosItem.hospitalName}}"></nz-option>
+            </nz-select>
+          </div>
+          &nbsp;
+          <!-- 测评方案名称 -->
+          <div class='evaluationChoice'>
+            <span class='explain'>*选择测评：</span>
+            <nz-select style="width: 120px;" [(ngModel)]="hositleValue" (ngModelChange)="eveluaChanges($event)" nzAllowClear nzPlaceHolder='请选择测评'>
+              <nz-option *ngFor = 'let item of evalList' nzValue="{{item.value}}" nzLabel="{{item.assessmentName}}"></nz-option>
+            </nz-select>
+          </div>
+        </nz-modal>
+      </nz-breadcrumb>
+      <div style="background:#fff; padding: 24px; min-height: 280px;">
+        <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="listOfAllData"
+          (nzCurrentPageDataChange)="currentPageDataChange($event)">
+          <thead>
+            <tr>
+              <th nzShowCheckbox nzShowRowSelection [nzSelections]="listOfSelection"
+                [(nzChecked)]="isAllDisplayDataChecked" [nzIndeterminate]="isIndeterminate"
+                (nzCheckedChange)="checkAll($event)"></th>
+              <th nzSortKey="evlName">方案名称</th>
+              <th nzSortKey="classification">分类</th>
+              <th nzSortKey="time">所属医院</th>
+              <th nzSortKey="evlCon">测评</th>
+              <th nzSortKey="evlFrequency">状态</th>
+              <th nzSortKey="evlUser">已筛查次数</th>
+              <th nzSortKey="esTime">已筛查人数</th>
+              <th nzSortKey="establish">创建时间</th>
+              <th nzSortKey="estabUser">创建人</th>
+              <th nzSortKey="operation">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of planItem">
+              <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
+              <!-- 方案名称 -->
+              <td>{{data.assessmentPlanName}}</td>
+              <!-- 分类 -->
+              <td>{{data.classify}}</td>
+              <!-- 所属医院 -->
+              <td>{{data.hospitalName}}</td>
+              <!-- 测评 -->
+              <td>{{data.planNum}}</td>
+              <!-- 状态 -->
+              <td>{{data.status}}</td>
+              <!-- 已筛查次数 -->
+              <td>{{data.planPatientNum}}</td>
+              <!-- 已筛查人数？？？ -->
+              <td>{{data.esTime}}</td>
+              <!-- 创建时间 -->
+              <td>{{data.createTime}}</td>
+              <!-- 创建人 -->
+              <td>{{data.assessmentPlanDescribe}}</td>
+              <!-- 操作 -->
+              <td>
+                <button nz-button nzType="primary">编辑</button>
+                <button nz-button nzType="primary">查看</button>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </nz-content>
+</nz-layout>

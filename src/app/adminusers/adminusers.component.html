@@ -1,0 +1,92 @@
+<nz-layout class="layout">
+  <!-- 档案列表顶部 -->
+  <app-backsheader></app-backsheader>
+  <!-- 顶部导航 -->
+  <ul class='adminList'>
+    <li (click) = 'dataClick()'>个人资料</li>
+    <li (click) = 'passClick()'>修改密码</li>
+  </ul>
+  <!-- 个人资料 -->
+  <div class='personal' *ngIf = 'dataHide'>
+    <form class = 'userPer' nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">姓名</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="name" id="name">
+          <!-- <nz-form-explain *ngIf="validateForm.get('name')?.dirty && validateForm.get('name')?.errors">
+            The input is not valid E-mail!
+          </nz-form-explain> -->
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="phone">手机号码</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="phone" id="phone">
+          <!-- <nz-form-explain *ngIf="validateForm.get('phone')?.dirty && validateForm.get('phone')?.errors">
+              The input is not valid E-mail!
+            </nz-form-explain> -->
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="emile">邮箱</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="emile" id="emile">
+          <!-- <nz-form-explain *ngIf="validateForm.get('emile')?.dirty && validateForm.get('emile')?.errors">
+                The input is not valid E-mail!
+              </nz-form-explain> -->
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="department">部门</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="department" id="department">
+          <!-- <nz-form-explain *ngIf="validateForm.get('department')?.dirty && validateForm.get('department')?.errors">
+                  The input is not valid E-mail!
+                </nz-form-explain> -->
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class = 'preservation' nz-row style="margin-bottom:8px;">
+        <nz-form-control [nzSpan]="14" [nzOffset]="6">
+          <button nz-button nzType="primary">保存</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+  <!-- 修改密码 -->
+  <div class='updataPass' *ngIf = 'passHide'>
+      <form class = 'userPer' nz-form [formGroup]="passwordForm" (ngSubmit)="passSubmit()">
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="usedPas">输入旧密码</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input formControlName="usedPas" id="usedPas">
+            <!-- <nz-form-explain *ngIf="passwordForm.get('usedPas')?.dirty && passwordForm.get('usedPas')?.errors">
+              The input is not valid E-mail!
+            </nz-form-explain> -->
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="newPas">输入新密码</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input formControlName="newPas" id="newPas">
+            <!-- <nz-form-explain *ngIf="passwordForm.get('newPas')?.dirty && passwordForm.get('newPas')?.errors">
+                The input is not valid E-mail!
+              </nz-form-explain> -->
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="erPas">重复新密码</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input formControlName="erPas" id="erPas">
+              <!-- <nz-form-explain *ngIf="passwordForm.get('erPas')?.dirty && passwordForm.get('erPas')?.errors">
+                  The input is not valid E-mail!
+                </nz-form-explain> -->
+            </nz-form-control>
+          </nz-form-item>
+        <nz-form-item class = 'preservation' nz-row style="margin-bottom:8px;">
+          <nz-form-control [nzSpan]="14" [nzOffset]="6">
+            <button nz-button nzType="primary">保存</button>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </div>
+</nz-layout>
